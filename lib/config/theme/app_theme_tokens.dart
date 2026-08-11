@@ -233,6 +233,8 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
     required this.subtle,
     required this.orange,
     required this.glowRadial,
+    required this.mainBackground,
+    required this.innerBackground,
   });
 
   final Gradient primary;
@@ -245,6 +247,14 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
   final Gradient subtle;
   final Gradient orange;
   final Gradient glowRadial;
+  final Gradient mainBackground;
+  final Gradient innerBackground;
+
+  static const defaultBackground = LinearGradient(
+    colors: [Color(0xFF14110B), _AppPalette.backgroundPrimary],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
 
   static const flow = AppGradientTokens(
     primary: LinearGradient(colors: [Color(0xFFC3FF3D), Color(0xFF87B26B)]),
@@ -266,6 +276,18 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
       colors: [Color(0x17C3FF3D), Color(0xFF000000)],
       stops: [0, 0.7],
     ),
+    mainBackground: LinearGradient(
+      colors: [Color(0x26C3FF3D), Color(0xFF1F2218), Color(0xFF0A0A0A)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
+    ),
+    innerBackground: LinearGradient(
+      colors: [Color(0x26C3FF3D), Color(0xFF1F2218), Color(0x2687B26B)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
+    ),
   );
 
   static const steady = AppGradientTokens(
@@ -285,6 +307,18 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
     glowRadial: RadialGradient(
       colors: [Color(0x17F97316), Color(0xFF000000)],
       stops: [0, 0.7],
+    ),
+    mainBackground: LinearGradient(
+      colors: [Color(0x26F97316), Color(0xFF221C18), Color(0xFF0A0A0A)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
+    ),
+    innerBackground: LinearGradient(
+      colors: [Color(0x26F97316), Color(0xFF221C18), Color(0x26D55900)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
     ),
   );
 
@@ -306,6 +340,18 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
       colors: [Color(0x1728D5E6), Color(0xFF000000)],
       stops: [0, 0.7],
     ),
+    mainBackground: LinearGradient(
+      colors: [Color(0x2628D5E6), Color(0xFF182122), Color(0xFF0A0A0A)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
+    ),
+    innerBackground: LinearGradient(
+      colors: [Color(0x2628D5E6), Color(0xFF182122), Color(0x2600C4D5)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0.0, 0.5, 1.0],
+    ),
   );
 
   @override
@@ -320,6 +366,8 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
     Gradient? subtle,
     Gradient? orange,
     Gradient? glowRadial,
+    Gradient? mainBackground,
+    Gradient? innerBackground,
   }) {
     return AppGradientTokens(
       primary: primary ?? this.primary,
@@ -332,6 +380,8 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
       subtle: subtle ?? this.subtle,
       orange: orange ?? this.orange,
       glowRadial: glowRadial ?? this.glowRadial,
+      mainBackground: mainBackground ?? this.mainBackground,
+      innerBackground: innerBackground ?? this.innerBackground,
     );
   }
 
@@ -349,6 +399,8 @@ class AppGradientTokens extends ThemeExtension<AppGradientTokens> {
       subtle: Gradient.lerp(subtle, other.subtle, t)!,
       orange: Gradient.lerp(orange, other.orange, t)!,
       glowRadial: Gradient.lerp(glowRadial, other.glowRadial, t)!,
+      mainBackground: Gradient.lerp(mainBackground, other.mainBackground, t)!,
+      innerBackground: Gradient.lerp(innerBackground, other.innerBackground, t)!,
     );
   }
 }

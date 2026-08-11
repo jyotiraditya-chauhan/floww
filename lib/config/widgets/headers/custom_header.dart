@@ -25,7 +25,7 @@ class CustomHeader extends StatelessWidget {
     return Container(
       height: AppSizes.s56,
       width: double.infinity,
-      margin: const EdgeInsets.all(AppSpacing.xl),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
       child: Stack(
         alignment: Alignment.center,
         children: [
