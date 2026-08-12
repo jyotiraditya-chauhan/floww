@@ -1,5 +1,6 @@
 import 'package:floww/core/auth/views/splash_view.dart';
 import 'package:floww/core/auth/views/welcome_to_flow_view.dart';
+import 'package:floww/core/onboarding/views/onboarding_question_view.dart';
 import 'package:flutter/material.dart';
 
 import '../core/auth/views/meet_waves_view.dart';
@@ -16,6 +17,8 @@ class AppRouterConfig {
         return MaterialPageRoute(builder: (_) => const MeetWavesView());
       case AppRouter.welcomeToFlowView:
         return MaterialPageRoute(builder: (_) => WelcomeToFlowView());
+      case AppRouter.onboardingQuestion:
+        return MaterialPageRoute(builder: (_) => OnboardingQuestionView());
       default:
         return MaterialPageRoute(
           builder: (_) =>

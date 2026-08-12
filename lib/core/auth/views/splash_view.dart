@@ -30,10 +30,8 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
       backgroundColor: context.colors.backgroundSurface,
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.full),
-          ),
+        child: ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(AppRadius.full),
           child: Image.asset(
             'assets/icons/app_icon.png',
             width: 120,

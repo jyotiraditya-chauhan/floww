@@ -2,7 +2,7 @@ import 'package:floww/config/constants/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:floww/config/theme/app_theme_tokens.dart';
 import 'package:floww/config/constants/app_sizes.dart';
-import '../buttons/circular_header_button.dart';
+import '../buttons/custom_buttons/circular_header_button.dart';
 
 class CustomHeader extends StatelessWidget {
   const CustomHeader({
@@ -22,10 +22,9 @@ class CustomHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSizes.s56,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
       child: Stack(
         alignment: Alignment.center,
         children: [

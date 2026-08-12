@@ -10,6 +10,7 @@ class CustomButton extends StatefulWidget {
     this.isDisabled = false,
     this.icon,
     this.width,
+    this.backgroundColor,
   });
 
   final String text;
@@ -18,6 +19,7 @@ class CustomButton extends StatefulWidget {
   final bool isDisabled;
   final IconData? icon;
   final double? width;
+  final Color? backgroundColor;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -61,16 +63,19 @@ class _CustomButtonState extends State<CustomButton> {
             height: 55,
             width: widget.width ?? double.infinity,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  context.gradients.primary.colors[0],
-                  context.gradients.primary.colors[0],
-                  context.gradients.primary.colors[1],
-                ],
-                begin: AlignmentGeometry.topCenter,
-                end: AlignmentGeometry.bottomCenter,
-                stops: [0.0, 0.5, 0.9],
-              ),
+              color: widget.backgroundColor,
+              gradient: widget.backgroundColor == null
+                  ? LinearGradient(
+                      colors: [
+                        context.gradients.primary.colors[0],
+                        context.gradients.primary.colors[0],
+                        context.gradients.primary.colors[1],
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: const [0.0, 0.5, 0.9],
+                    )
+                  : null,
               borderRadius: BorderRadius.circular(27.5),
               border: Border.all(
                 color: context.scheme.onPrimary.withValues(alpha: 0.2),
@@ -102,7 +107,7 @@ class _CustomButtonState extends State<CustomButton> {
                         ],
                         Text(
                           widget.text,
-                          style: context.textTheme.labelLarge?.copyWith(
+                          style: context.textTheme.titleLarge?.copyWith(
                             color: context.scheme.onPrimary,
                           ),
                         ),

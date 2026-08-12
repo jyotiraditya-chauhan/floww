@@ -4,4 +4,10 @@ class AppImages {
   static const String appIcon = '$_iconsBase/app_icon.png';
   static const String waveIcon = '$_iconsBase/wave_icon.svg';
   static const String sparkel = '$_iconsBase/sparkel_icon.svg';
+
+  static const String welcome1 = '$_iconsBase/welcome_1.svg';
+  static const String welcome2 = '$_iconsBase/welcome_2.svg';
+  static const String welcome3 = '$_iconsBase/welcome_3.svg';
+
+  static const String appleHealthIcon = '$_iconsBase/apple_health_icon.svg';
 }

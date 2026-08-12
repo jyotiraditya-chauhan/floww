@@ -80,7 +80,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                     )
                   : Text(
                       widget.text,
-                      style: context.textTheme.labelLarge?.copyWith(
+                      style: context.textTheme.titleLarge?.copyWith(
                         color: context.colors.textPrimary,
                       ),
                     ),

@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:floww/config/constants/app_sizes.dart';
+import 'package:floww/config/theme/app_theme_tokens.dart';
 
 class AnimatedReverseRipple extends StatefulWidget {
   final Widget child;
-  final Color rippleColor;
+  final Color? rippleColor;
   final int ringCount;
   final double minRadius;
   final double maxRadius;
@@ -14,13 +16,13 @@ class AnimatedReverseRipple extends StatefulWidget {
   const AnimatedReverseRipple({
     super.key,
     required this.child,
-    this.rippleColor = const Color(0xFFC3FF3D), // Default to Floww primary
-    this.ringCount = 6, // Increased for a more 'infinite' continuous look
-    this.minRadius = 40.0,
+    this.rippleColor,
+    this.ringCount = 6,
+    this.minRadius = AppSizes.s40,
     this.maxRadius = 150.0,
-    this.duration = const Duration(seconds: 4), // Slowed down
+    this.duration = const Duration(seconds: 4),
     this.strokeWidth = 1.0,
-    this.isInward = true, // true = max to min, false = min to max
+    this.isInward = true,
   });
 
   @override
@@ -55,13 +57,15 @@ class _AnimatedReverseRippleState extends State<AnimatedReverseRipple>
 
   @override
   Widget build(BuildContext context) {
+    final resolvedColor = widget.rippleColor ?? AppColorTokens.flow.primary;
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
         return CustomPaint(
           painter: _ReverseRipplePainter(
             progress: _controller.value,
-            color: widget.rippleColor,
+            color: resolvedColor,
             ringCount: widget.ringCount,
             minRadius: widget.minRadius,
             maxRadius: widget.maxRadius,
@@ -104,15 +108,12 @@ class _ReverseRipplePainter extends CustomPainter {
       ..strokeWidth = strokeWidth;
 
     for (int i = 0; i < ringCount; i++) {
-      // Calculate normalized progress for each ring, offset by i
       double ringProgress = (progress + (i / ringCount)) % 1.0;
 
-      // Determine radius based on direction
       double currentRadius = isInward
           ? minRadius + (maxRadius - minRadius) * (1 - ringProgress)
           : minRadius + (maxRadius - minRadius) * ringProgress;
 
-      // Opacity fades in at maxRadius and fades out at minRadius
       double opacity = math.sin(ringProgress * math.pi);
 
       paint.color = color.withValues(alpha: opacity * 0.5);
