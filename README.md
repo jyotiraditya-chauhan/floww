@@ -16,7 +16,11 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Feature Notes
 
+- The "Meet WAVE" intro and "Three Modes" onboarding-intro screens are merged into a single view (`lib/core/auth/views/meet_waves_view.dart`). Tapping "Get Started" plays a custom staggered scale + fade transition (`lib/core/auth/widgets/step_reveal_item.dart`) between the two steps instead of navigating to a second route; the header back arrow reverses it. The old `welcomeToFlowView` route and `WelcomeToFlowView` screen were removed since nothing else referenced them.
+- Added an "Account Setup" screen (`lib/core/auth/views/auth_view.dart`, route `AppRouter.accountSetup`) between the mode showcase and onboarding — Google/Apple sign-in and "Skip for Now" all currently just proceed to onboarding (no auth backend wired up yet). `CustomButton`/`CustomOutlinedButton` gained optional `leading`/`foregroundColor` params to support this screen's icon buttons.
+- Built the Home screen (`lib/core/home/views/home_view.dart`, `HomeProvider` in `core/home/providers/`, section widgets in `core/home/widgets/`): Flow Score, Today's Habit, Today's Workout, Nutrition Summary, Apple Health Sync, and Today's Progress cards, plus a conditional "How to Increase Your Flow Score" card (shown only at 0% flow score) and a Wave Insight banner (shown only when present). Ships with populated sample data by default, but every card's empty-state branch is driven by real (currently zero/empty) values, not dead code. Muscle Recovery and the bottom nav bar/floating WAVE button from the reference designs were intentionally left out of this pass — no anatomical artwork exists for the former, and the latter is a separate app-shell concern.
 
 ## Strict Coding Rules every time to follow
 
@@ -40,4 +44,4 @@ samples, guidance on mobile development, and a full API reference.
 - Consistent naming across files, classes, methods, and widgets.
 - Prefer `const` constructors/widgets wherever possible.
 - No new packages or architectural patterns without approval — reuse the existing stack and conventions.
-- Please update README.md file each time after any feature updations and max size of CLAUDE.md should be 160 lines
+- Please update README.md file each time after any feature updations and max size of CLAUDE.md should be 160 lines, add in README to follow

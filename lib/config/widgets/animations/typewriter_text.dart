@@ -7,6 +7,7 @@ class TypewriterText extends StatefulWidget {
   final TextAlign? textAlign;
   final Duration speed;
   final VoidCallback? onFinished;
+  final bool start;
 
   const TypewriterText({
     super.key,
@@ -15,6 +16,7 @@ class TypewriterText extends StatefulWidget {
     this.textAlign,
     this.speed = const Duration(milliseconds: 15),
     this.onFinished,
+    this.start = true,
   });
 
   @override
@@ -28,13 +30,15 @@ class _TypewriterTextState extends State<TypewriterText> {
   @override
   void initState() {
     super.initState();
-    _startTyping();
+    if (widget.start) _startTyping();
   }
 
   @override
   void didUpdateWidget(covariant TypewriterText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    final textChanged = oldWidget.text != widget.text;
+    final justEnabled = !oldWidget.start && widget.start;
+    if (widget.start && (textChanged || justEnabled)) {
       _startTyping();
     }
   }

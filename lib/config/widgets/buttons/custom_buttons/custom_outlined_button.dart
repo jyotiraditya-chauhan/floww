@@ -9,6 +9,7 @@ class CustomOutlinedButton extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.width,
+    this.leading,
   });
 
   final String text;
@@ -16,6 +17,7 @@ class CustomOutlinedButton extends StatefulWidget {
   final bool isLoading;
   final bool isDisabled;
   final double? width;
+  final Widget? leading;
 
   @override
   State<CustomOutlinedButton> createState() => _CustomOutlinedButtonState();
@@ -78,11 +80,20 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                         ),
                       ),
                     )
-                  : Text(
-                      widget.text,
-                      style: context.textTheme.titleLarge?.copyWith(
-                        color: context.colors.textPrimary,
-                      ),
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (widget.leading != null) ...[
+                          widget.leading!,
+                          const SizedBox(width: 8),
+                        ],
+                        Text(
+                          widget.text,
+                          style: context.textTheme.titleLarge?.copyWith(
+                            color: context.colors.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
             ),
           ),

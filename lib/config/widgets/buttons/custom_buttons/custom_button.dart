@@ -9,8 +9,10 @@ class CustomButton extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.icon,
+    this.leading,
     this.width,
     this.backgroundColor,
+    this.foregroundColor,
   });
 
   final String text;
@@ -18,8 +20,10 @@ class CustomButton extends StatefulWidget {
   final bool isLoading;
   final bool isDisabled;
   final IconData? icon;
+  final Widget? leading;
   final double? width;
   final Color? backgroundColor;
+  final Color? foregroundColor;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -39,6 +43,7 @@ class _CustomButtonState extends State<CustomButton> {
 
   @override
   Widget build(BuildContext context) {
+    final foregroundColor = widget.foregroundColor ?? context.scheme.onPrimary;
     final double targetOpacity = !_isEnabled
         ? 0.5
         : _pressed
@@ -90,25 +95,24 @@ class _CustomButtonState extends State<CustomButton> {
                       child: CircularProgressIndicator(
                         strokeWidth: 2.5,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          context.scheme.onPrimary,
+                          foregroundColor,
                         ),
                       ),
                     )
                   : Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (widget.icon != null) ...[
-                          Icon(
-                            widget.icon,
-                            color: context.scheme.onPrimary,
-                            size: 20,
-                          ),
+                        if (widget.leading != null) ...[
+                          widget.leading!,
+                          const SizedBox(width: 8),
+                        ] else if (widget.icon != null) ...[
+                          Icon(widget.icon, color: foregroundColor, size: 20),
                           const SizedBox(width: 8),
                         ],
                         Text(
                           widget.text,
                           style: context.textTheme.titleLarge?.copyWith(
-                            color: context.scheme.onPrimary,
+                            color: foregroundColor,
                           ),
                         ),
                       ],
