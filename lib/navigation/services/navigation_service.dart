@@ -19,4 +19,11 @@ class NavigationService {
       );
 
   void pop() => navigatorKey.currentState!.pop();
+
+  Future<dynamic> pushAndRemoveUntil(String routeName, {Object? arguments}) =>
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
+        routeName,
+        (route) => false,
+        arguments: arguments,
+      );
 }

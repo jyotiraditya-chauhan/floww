@@ -1,10 +1,10 @@
+import 'package:floww/config/theme/app_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:floww/config/constants/app_sizes.dart';
 import 'package:floww/config/constants/app_spacing.dart';
 import 'package:floww/config/theme/app_theme.dart';
 import 'package:floww/config/theme/app_theme_tokens.dart';
 import 'package:floww/config/widgets/buttons/custom_buttons/custom_outlined_button.dart';
-import 'package:floww/core/home/widgets/home_card.dart';
 
 class FlowScoreCard extends StatelessWidget {
   const FlowScoreCard({
@@ -22,59 +22,105 @@ class FlowScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomeCard(
-      variant: HomeCardVariant.highlighted,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: context.colors.bgTinted,
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        border: Border.all(color: context.colors.borderGlow, width: 1),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1C2218), Color(0xFF93D500)],
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              Icon(Icons.bolt, color: context.colors.primary, size: AppSizes.s20),
-              SizedBox(width: AppSpacing.sm),
-              Text('Flow Score', style: context.textTheme.titleLarge),
-            ],
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.topRight,
+                  radius: 1.0,
+                  colors: [
+                    context.colors.backgroundSurface,
+                    context.colors.backgroundSurface.withValues(alpha: 0),
+                  ],
+                ),
+              ),
+            ),
           ),
-          SizedBox(height: AppSpacing.lg),
-          _FlowScoreBar(fraction: percent / 100),
-          SizedBox(height: AppSpacing.lg),
-          if (percent == 0) ..._buildEmptyState(context) else ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '$percent',
-                  style: context.textTheme.displayLarge?.copyWith(height: 1),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: Text(
-                    '%',
-                    style: context.textTheme.titleLarge?.copyWith(
-                      color: context.colors.textSecondary,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.bolt,
+                      color: context.colors.primary,
+                      size: AppSizes.s20,
                     ),
-                  ),
+                    SizedBox(width: AppSpacing.sm),
+                    Text('Flow Score', style: context.textTheme.titleLarge),
+                  ],
                 ),
-                const Spacer(),
-                if (recoveryLevel != null)
-                  _StatColumn(label: 'RECOVERY', value: recoveryLevel!, showDot: true),
-                if (recoveryLevel != null && todayMode != null)
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                    child: Container(
-                      width: 1,
-                      height: AppSizes.s32,
-                      color: context.colors.borderSubtle,
-                    ),
+                SizedBox(height: AppSpacing.lg),
+                _FlowScoreBar(fraction: percent / 100),
+                SizedBox(height: AppSpacing.lg),
+                if (percent == 0)
+                  ..._buildEmptyState(context)
+                else ...[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        '$percent',
+                        style: context.textTheme.displayLarge?.copyWith(
+                          height: 1,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: AppSpacing.xs),
+                        child: Text(
+                          '%',
+                          style: context.textTheme.titleLarge?.copyWith(
+                            color: context.colors.textSecondary,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      if (recoveryLevel != null)
+                        _StatColumn(
+                          label: 'RECOVERY',
+                          value: recoveryLevel!,
+                          showDot: true,
+                        ),
+                      if (recoveryLevel != null && todayMode != null)
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          child: Container(
+                            width: 1,
+                            height: AppSizes.s32,
+                            color: context.colors.borderSubtle,
+                          ),
+                        ),
+                      if (todayMode != null)
+                        _StatColumn(
+                          label: "TODAY'S MODE",
+                          value: todayMode!.name.toUpperCase(),
+                          showDot: false,
+                        ),
+                    ],
                   ),
-                if (todayMode != null)
-                  _StatColumn(
-                    label: "TODAY'S MODE",
-                    value: todayMode!.name.toUpperCase(),
-                    showDot: false,
-                  ),
+                ],
               ],
             ),
-          ],
+          ),
         ],
       ),
     );
@@ -115,8 +161,8 @@ class _FlowScoreBar extends StatelessWidget {
 
   final double fraction;
 
-  static const double _trackHeight = 8;
-  static const double _thumbSize = 14;
+  static const double _trackHeight = 24;
+  static const double _thumbSize = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +172,7 @@ class _FlowScoreBar extends StatelessWidget {
         builder: (context, constraints) {
           final trackWidth = constraints.maxWidth;
           final fillWidth = (trackWidth * fraction.clamp(0.0, 1.0));
-          final thumbLeft = (fillWidth - _thumbSize / 2).clamp(
+          final thumbLeft = (fillWidth - _thumbSize / 5).clamp(
             0.0,
             trackWidth - _thumbSize,
           );
@@ -146,23 +192,32 @@ class _FlowScoreBar extends StatelessWidget {
                 width: fillWidth,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
+                    stops: [0.1, 0.5, 1.0],
                     colors: [
-                      context.colors.primaryDeep,
-                      context.colors.primary,
+                      Color(0xFF84B814),
+                      Color(0xFFC3FF3D),
+                      Color(0xFFFFFFFF),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(AppRadius.full),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(AppRadius.full),
+                    bottomLeft: Radius.circular(AppRadius.full),
+                  ),
                 ),
               ),
               if (fraction > 0)
                 Positioned(
                   left: thumbLeft,
                   child: Container(
-                    width: _thumbSize,
+                    width: _thumbSize / 5,
                     height: _thumbSize,
                     decoration: BoxDecoration(
-                      color: context.colors.textPrimary,
-                      shape: BoxShape.circle,
+                      color: context.colors.primary,
+                      border: Border.all(
+                        color: context.colors.textPrimary,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
                           color: context.colors.textPrimary.withValues(

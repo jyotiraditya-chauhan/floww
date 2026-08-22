@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import '../data/onboarding_data.dart';
 import '../models/onboarding_models.dart';
+import '../services/onboarding_service.dart';
 
 class OnboardingProvider extends ChangeNotifier {
+  OnboardingProvider({OnboardingService? onboardingService})
+    : _onboardingService = onboardingService ?? OnboardingService();
+
+  final OnboardingService _onboardingService;
+
   int _currentPhaseIndex = 0;
   int _currentQuestionIndex = 0;
   final Map<String, dynamic> _answers = {};
+
+  bool isSubmitting = false;
+  String? submitError;
 
   int get currentPhaseIndex => _currentPhaseIndex;
   int get currentQuestionIndex => _currentQuestionIndex;
@@ -100,20 +109,36 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Proceed to the next question or phase
-  void nextQuestion(PageController pageController) {
+  /// Proceed to the next question or phase. Returns true once the whole
+  /// flow is complete and the answers have been submitted successfully.
+  Future<bool> nextQuestion(PageController pageController) async {
     if (_currentQuestionIndex < currentPhase.questions.length - 1) {
       _currentQuestionIndex++;
       _animateToCurrentPage(pageController);
+      notifyListeners();
+      return false;
     } else if (_currentPhaseIndex < activePhases.length - 1) {
       _currentPhaseIndex++;
       _currentQuestionIndex = 0;
       _animateToCurrentPage(pageController);
-    } else {
-      // Flow is complete
-      // TODO: Submit data to backend, navigate to home screen
+      notifyListeners();
+      return false;
     }
+
+    submitError = null;
+    isSubmitting = true;
     notifyListeners();
+
+    try {
+      await _onboardingService.submitOnboardingAnswers(_answers);
+      return true;
+    } on OnboardingException catch (e) {
+      submitError = e.message;
+      return false;
+    } finally {
+      isSubmitting = false;
+      notifyListeners();
+    }
   }
 
   /// Private helper to animate the page view smoothly

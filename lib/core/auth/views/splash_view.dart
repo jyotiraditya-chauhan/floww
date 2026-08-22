@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:floww/navigation/app_router.dart';
 import 'package:floww/navigation/services/navigation_service.dart';
 import 'package:floww/config/theme/app_theme_tokens.dart';
+import 'package:floww/core/auth/view_models/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -22,7 +24,16 @@ class _SplashViewState extends State<SplashView> {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
-    NavigationService.instance.pushReplacement(AppRouter.meetWaves);
+    final user = await context.read<AuthViewModel>().restoreSession();
+    if (!mounted) return;
+
+    if (user == null) {
+      NavigationService.instance.pushReplacement(AppRouter.meetWaves);
+    } else {
+      NavigationService.instance.pushAndRemoveUntil(
+        AppRouter.routeAfterAuth(user),
+      );
+    }
   }
 
   @override

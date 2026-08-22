@@ -54,10 +54,7 @@ class TodayWorkoutCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        workout.title,
-                        style: context.textTheme.titleLarge,
-                      ),
+                      Text(workout.title, style: context.textTheme.titleLarge),
                       SizedBox(height: AppSpacing.xs),
                       Row(
                         children: [

@@ -12,7 +12,6 @@ enum InputType {
   inlineSlider,
   yesNo,
   permission,
-  healthIntegration,
   loading,
   summary,
   multiQuestion,

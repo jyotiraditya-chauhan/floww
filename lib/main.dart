@@ -1,3 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:floww/config/theme/app_mode.dart';
+import 'package:floww/core/auth/services/auth_service.dart';
+import 'package:floww/core/auth/view_models/auth_view_model.dart';
+import 'package:floww/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +15,7 @@ import 'navigation/router_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final prefs = await SharedPreferences.getInstance();
   final saved = AppThemeMode.values.firstWhere(
     (e) => e.name == (prefs.getString('app_theme_mode') ?? 'flow'),
@@ -25,8 +31,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeModeController(initialMode),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeModeController(initialMode)),
+        ChangeNotifierProvider(create: (_) => AuthViewModel(AuthService())),
+      ],
       child: Consumer<ThemeModeController>(
         builder: (context, controller, _) => MaterialApp(
           debugShowCheckedModeBanner: false,

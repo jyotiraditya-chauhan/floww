@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328901179784",
+    "project_id": "floww-fitness",
+    "storage_bucket": "floww-fitness.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328901179784:android:6e39d87ff9d1b2f691a23d",
+        "android_client_info": {
+          "package_name": "com.example.floww"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9SPGQAl-lCpkK8rlxkd73fbMktUfmLgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

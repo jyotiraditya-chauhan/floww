@@ -22,21 +22,9 @@ class WaveInsightBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: AppSizes.s28,
-            width: AppSizes.s28,
-            decoration: BoxDecoration(
-              color: context.colors.primary,
-              shape: BoxShape.circle,
-            ),
-            padding: EdgeInsets.all(AppSpacing.xs),
-            child: SvgPicture.asset(
-              AppImages.waveIcon,
-              colorFilter: ColorFilter.mode(
-                context.colors.textPrimary,
-                BlendMode.srcIn,
-              ),
-            ),
+          ClipRRect(
+            borderRadius: BorderRadiusGeometry.circular(999),
+            child: SvgPicture.asset(AppImages.appIconSvg),
           ),
           SizedBox(width: AppSpacing.md),
           Expanded(
@@ -53,7 +41,10 @@ class WaveInsightBanner extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  TextSpan(text: message),
+                  TextSpan(
+                    text: message,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),

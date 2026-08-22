@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:floww/config/theme/app_theme_tokens.dart';
 import 'package:floww/config/constants/app_images.dart';
 import 'package:floww/config/theme/app_typography.dart';
-import '../providers/onboarding_provider.dart';
 
 class HealthIntegrationWidget extends StatelessWidget {
-  final String questionId;
+  final bool isConnected;
+  final VoidCallback onToggle;
 
-  const HealthIntegrationWidget({super.key, required this.questionId});
+  const HealthIntegrationWidget({
+    super.key,
+    required this.isConnected,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<OnboardingProvider>();
-    final isConnected = provider.getAnswer(questionId) == true;
     final themeColors = context.colors;
 
     final borderColor = isConnected
@@ -46,9 +47,7 @@ class HealthIntegrationWidget extends StatelessWidget {
         const SizedBox(height: 16),
         // Apple Health Card
         GestureDetector(
-          onTap: () {
-            provider.setAnswer(questionId, !isConnected);
-          },
+          onTap: onToggle,
           behavior: HitTestBehavior.opaque,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),

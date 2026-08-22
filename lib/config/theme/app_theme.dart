@@ -1,9 +1,10 @@
+import 'package:floww/config/theme/app_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_typography.dart';
 import 'app_theme_tokens.dart';
 
-enum AppThemeMode { flow, steady, restore }
+
 
 class AppTheme {
   AppTheme._();

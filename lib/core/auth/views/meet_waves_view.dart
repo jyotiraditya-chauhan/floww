@@ -151,7 +151,8 @@ class _StepOneContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(AppImages.sparkel),
+                            SvgPicture.asset(AppImages.appIconSvg),
+                            SizedBox(width: 8),
                             Text(
                               "Floww",
                               style: context.textTheme.displaySmall,

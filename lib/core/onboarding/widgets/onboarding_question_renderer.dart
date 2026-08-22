@@ -14,7 +14,6 @@ import '../models/onboarding_models.dart';
 import '../providers/onboarding_provider.dart';
 import 'custom_progress_widget.dart';
 import 'custom_date_time_selector.dart';
-import 'health_integration_widget.dart';
 
 class OnboardingQuestionRenderer extends StatefulWidget {
   final OnboardingQuestion question;
@@ -127,9 +126,6 @@ class _OnboardingQuestionRendererState extends State<OnboardingQuestionRenderer>
     final currentValue = provider.getAnswer(q.id);
 
     switch (q.inputType) {
-      case InputType.healthIntegration:
-        return HealthIntegrationWidget(questionId: q.id);
-
       case InputType.multiQuestion:
         return Column(
           children: (q.subQuestions ?? []).map((subQ) {

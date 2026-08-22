@@ -1,3 +1,4 @@
+import 'package:floww/config/theme/app_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:floww/config/theme/app_theme.dart';
 
@@ -82,6 +83,20 @@ class TodayProgress {
       totalCount == 0 ? 0 : ((completedCount / totalCount) * 100).round();
 }
 
+class MuscleRecoveryData {
+  const MuscleRecoveryData({
+    required this.daysSinceLastWorkout,
+    required this.inRecoveryCount,
+    required this.readyMusclesCount,
+    required this.fatiguedMusclesCount,
+  });
+
+  final int daysSinceLastWorkout;
+  final int inRecoveryCount;
+  final int readyMusclesCount;
+  final int fatiguedMusclesCount;
+}
+
 class HomeProvider extends ChangeNotifier {
   HomeProvider() {
     _greeting = _greetingForHour(DateTime.now().hour);
@@ -159,4 +174,11 @@ class HomeProvider extends ChangeNotifier {
 
   final String? waveInsight =
       'Recovery is high. Neural fatigue minimal — prime window for a push session PB.';
+
+  final MuscleRecoveryData muscleRecovery = const MuscleRecoveryData(
+    daysSinceLastWorkout: 0,
+    inRecoveryCount: 3,
+    readyMusclesCount: 7,
+    fatiguedMusclesCount: 2,
+  );
 }

@@ -841,12 +841,6 @@ class OnboardingData {
           ],
         ),
         OnboardingQuestion(
-          id: 'apple_health',
-          title: 'Connect wearables',
-          subtitle: 'Sync recovery & activity automatically.',
-          inputType: InputType.healthIntegration,
-        ),
-        OnboardingQuestion(
           id: 'referral',
           title: 'Referral Source',
           subtitle: 'How did you hear about FLOWW?',

@@ -7,6 +7,7 @@ import 'package:floww/config/theme/app_theme_tokens.dart';
 import 'package:floww/config/utils/backgrounds/app_background.dart';
 import 'package:floww/config/widgets/buttons/custom_buttons/custom_button.dart';
 import 'package:floww/config/widgets/headers/custom_header.dart';
+import 'package:floww/navigation/app_router.dart';
 import 'package:floww/navigation/services/navigation_service.dart';
 
 import '../providers/onboarding_provider.dart';
@@ -32,6 +33,15 @@ class _OnboardingQuestionViewState extends State<OnboardingQuestionView> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> _handleContinue(OnboardingProvider provider) async {
+    final completed = await provider.nextQuestion(_pageController);
+    if (completed && mounted) {
+      NavigationService.instance.pushAndRemoveUntil(
+        AppRouter.connectWearables,
+      );
+    }
   }
 
   @override
@@ -146,12 +156,23 @@ class _OnboardingQuestionViewState extends State<OnboardingQuestionView> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        if (provider.submitError != null) ...[
+                          Text(
+                            provider.submitError!,
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: context.colors.destructive,
+                            ),
+                          ),
+                          SizedBox(height: AppSpacing.lg),
+                        ],
                         // Bottom Navigation
                         CustomButton(
                           text: "Continue",
+                          isLoading: provider.isSubmitting,
                           // Disable button if answer is missing
                           onPressed: provider.canContinue
-                              ? () => provider.nextQuestion(_pageController)
+                              ? () => _handleContinue(provider)
                               : null,
                         ),
                         SizedBox(
